@@ -6,7 +6,7 @@ var enemies = [];
 var bolsa = './Resourses/bag.png';
 var vaso = './Resourses/vaso rojo.png' ;
 let botella = './Resourses/botella.png';
-var bullets = [];
+var bullet = [];
 let imgEnemy = [bolsa, vaso, botella];
 
 
@@ -55,8 +55,6 @@ class Background {
     );
   }
 }
-
-
 
 
 class Enemy{
@@ -158,6 +156,31 @@ function drawingEnemies(){
   })
 }
 
+function drawbullet() {
+  if (bullet.length)
+    for (var i = 0; i < bullet.length; i++) {
+     ctx.fillStyle = '#f00';
+     ctx.fillRect(bullet[i][0],bullet[i][1],bullet[i][2],bullet[i][3])
+   }
+}
+function movebullet() {
+ for (var i = 0; i < bullet.length; i++) {
+   if (bullet[i][1] > -11) {
+      bullet[i][1] -= 10;
+    } else if (bullet[i][1] < -10) {
+     bullet.splice(i, 1);
+   }
+ }
+}
+
+function keyDown(e) {
+ if (e.keyCode == 39) rightKey = true;
+ else if (e.keyCode == 37) leftKey = true;
+ if (e.keyCode == 38) upKey = true;
+ else if (e.keyCode == 40) downKey = true;
+ if (e.keyCode == 32 && bullet.length <= bulletTotal) bullet.push([player_x + 25, player_y - 20, 4, 20]);
+
+}
 
 
 
