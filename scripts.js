@@ -6,16 +6,16 @@ var enemies = [];
 var bolsa = './Resourses/bag.png';
 var vaso = './Resourses/vaso rojo.png' ;
 let botella = './Resourses/botella.png';
-var bullet = [];
+var bullets = [];
 let imgEnemy = [bolsa, vaso, botella];
 
-
 class character{
-  constructor(x,y,width,height,img){ 
+  constructor(x,y,width,height,health,img){ 
   this.width= width;
   this.height = height;
+  this.health = 100;
   this.image = new Image();
-  this.image.src = './Resourses/itzama.png';
+  this.image.src = './Resourses/itzama1.png';
 }
 collision(item) {
   return (
@@ -25,6 +25,8 @@ collision(item) {
     mouseY + this.height > item.y
   );
 }
+
+
 draw(x,y){
    ctx.drawImage(this.image,x, y,this.width,this.height)
     }
@@ -58,13 +60,14 @@ class Background {
 
 
 class Enemy{
-  constructor(img,y, width,height){
+  constructor(img,y, width,height,damage){
       this.x = canvas.width;
       this.y = y;
       this.width = width;
       this.height = height;
       this.image = new Image();
       this.image.src = img;
+      this.damage = damage;
   }
 
   draw(){
@@ -72,10 +75,42 @@ class Enemy{
       ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
-const Itzama = new character (mouseX, mouseY, 50, 50,);
+class statusBar{
+  constructor(x,y,width,height,radius,color){ 
+  this.width= width;
+  this.height = height;
+  this.x = x;
+  this.y =y;
+  this.radius = radius
+  this.color =color
+  
+  this.update = function(){
+    
+    ctx.fillRect(this.x, this.y,this.width,this.height,this.radius )
+  }
+}
+
+draw(){
+    ctx.moveTo(this.x , this.y);
+    ctx.lineTo(this.x + this.width - this.radius, this.y);
+    ctx.arcTo(this.x + this.width, this.y, this.x + this.width, this.y + this.radius, this.radius);
+    ctx.lineTo(this.x + this.width, this.y + this.height);
+    ctx.lineWidth = 5;
+    ctx.fillRect(this.x, this.y,this.width,this.height )
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y,this.width,this.height,this.radius)
+    }
+  
+};
+
+const healthBar = new statusBar (900,20,250,30,10,'#F9CD06');
+const Itzama = new character (mouseX, mouseY, 90, 100,);
 const Fondo = new Background ();
 
 
+
+
+//
 const update = ()=>{
   Itzama.draw(mouseX,mouseY)
   //
@@ -86,7 +121,7 @@ const update = ()=>{
   requestAnimationFrame(update);
 }
 
-
+//
 function getPosition(el) {
   var xPosition = 0;
   var yPosition = 0;
@@ -104,17 +139,21 @@ function getPosition(el) {
 var canvasPos = getPosition(canvas);
 
 let frames = 0;
-start=()=>{
-setInterval(function() {
+
+function start(){
+interval = setInterval(function() {
   frames ++;
-  Fondo.draw();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  Fondo.draw();
   generateEnemies();
   drawingEnemies();
+  healthBar.draw();
+  
   
   //enemy.draw(40,200);
 }, 1000 / 100);
 }
+
 canvas.addEventListener("mousemove", setMousePosition, false);
  
 function setMousePosition(e) {
@@ -125,22 +164,25 @@ function setMousePosition(e) {
 const generateEnemies = () =>{
   if(frames % 800 == 0 || frames % 60 == 0 || frames % 170 == 0){
     // creamos una instancia de Enemy y la agregamos aun arreglo
-    let width , height = 0;
+    let width , height ,damage= 0;
     const pos = Math.floor(Math.random() * canvas.width * 0.5);
     let imgPosition = Math.floor(Math.random() * imgEnemy.length);
     if(imgPosition == 0){
-      width = 30 
-      height =50
+      width = 40 
+      height = 60
+      damage = 10
     }
     if (imgPosition == 1) {
-      width = 40
-      height = 40
+      width = 50
+      height = 50
+      damage = 20
     }
     if (imgPosition == 2){
-      width = 30
-      height= 60
+      width = 40
+      height= 70
+      damage = 30
     }
-    const enemy = new Enemy (imgEnemy[imgPosition],pos,width,height)
+    const enemy = new Enemy (imgEnemy[imgPosition],pos,width,height,damage)
     enemies.push(enemy);
 }
 }
@@ -151,35 +193,10 @@ function drawingEnemies(){
     }
       enemy.draw();
       if(Itzama.collision(enemy)){
-        console.log('byebye')
+        Itzama.health -= enemy.damage 
+        console.log('auch')
       }
   })
-}
-
-function drawbullet() {
-  if (bullet.length)
-    for (var i = 0; i < bullet.length; i++) {
-     ctx.fillStyle = '#f00';
-     ctx.fillRect(bullet[i][0],bullet[i][1],bullet[i][2],bullet[i][3])
-   }
-}
-function movebullet() {
- for (var i = 0; i < bullet.length; i++) {
-   if (bullet[i][1] > -11) {
-      bullet[i][1] -= 10;
-    } else if (bullet[i][1] < -10) {
-     bullet.splice(i, 1);
-   }
- }
-}
-
-function keyDown(e) {
- if (e.keyCode == 39) rightKey = true;
- else if (e.keyCode == 37) leftKey = true;
- if (e.keyCode == 38) upKey = true;
- else if (e.keyCode == 40) downKey = true;
- if (e.keyCode == 32 && bullet.length <= bulletTotal) bullet.push([player_x + 25, player_y - 20, 4, 20]);
-
 }
 
 
