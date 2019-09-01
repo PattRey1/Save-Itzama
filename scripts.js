@@ -58,6 +58,29 @@ class Background {
   }
 }
 
+class Bullet {
+  constructor(x, y) {
+    this.x = x; 
+    this.y = y;
+    this.width = 20;
+    this.height = 20;
+    this.image = new Image();
+    this.image.src = "./Resourses/BULLET.png";
+  }
+  collision(item) {
+    return (
+      this.x < item.x + item.width &&
+      this.x + this.width > item.x &&
+      this.y < item.y + item.height &&
+      this.y + this.height > item.y
+    );
+    }
+  draw() {
+    this.x += 1;
+    ctx.drawImage(this.image,this.x, this.y,this.width,this.height)
+  }
+
+}
 
 class Enemy{
   constructor(img,y, width,height,damage){
@@ -71,7 +94,7 @@ class Enemy{
   }
 
   draw(){
-      if(frames % 10) this.x -= 5;
+      if(frames % 19) this.x -= 5;
       ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
@@ -148,8 +171,8 @@ interval = setInterval(function() {
   generateEnemies();
   drawingEnemies();
   healthBar.draw();
-  
-  
+  drawingBullets();
+
   //enemy.draw(40,200);
 }, 1000 / 100);
 }
@@ -193,11 +216,36 @@ function drawingEnemies(){
     }
       enemy.draw();
       if(Itzama.collision(enemy)){
-        Itzama.health -= enemy.damage 
+        Itzama.health - enemy.damage 
         console.log('auch')
       }
   })
 }
+//
+function drawingBullets(){
+  bullets.forEach((bullet,i)  => {
+    bullet.draw()
+    console.log(bullet)
+    //if(bullet.collision(enemy)){
+      enemies.forEach((enemy,j) => {
+        if (bullet.collision(enemy)){
+          enemies.splice(j,1)
+          bullets.splice(i,1)
+        }
+      });
+    //}
+  })
+}
+
+addEventListener('click',(e)=>{
+  if (e.button === 0){
+    console.log('dipara')
+    if (bullets.length <= 3){
+      bullets.push(new Bullet(mouseX,mouseY))
+
+    }
+  }
+})
 
 
 
