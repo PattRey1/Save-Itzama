@@ -8,7 +8,7 @@ canvas{
   border:5px solid #F4B3B2;
   border-radius: 13px;
   cursor: none;
-  height: 90vh;
+  height: 97vh;
   width: 90%;
 }
 a{
@@ -56,10 +56,8 @@ button:active{
   position: relative; 
 }
 .start button{
-  width: 20%;
   align-self:center;
-  margin-bottom: 30px;
-  
+  margin-bottom: 30px;  
 }
 
 
