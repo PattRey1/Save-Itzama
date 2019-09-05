@@ -1,7 +1,33 @@
+var i = 0;
+var txt = '¡HOLA! Me llamo Itzamá y soy un anfibio endémico de México, me encuentro en peligro de extinción en mi país por falta de cuidado en mi entorno natural XOCHIMILCO y de ti depende que llegue sano y salvo a mi casa. ¿Me ayudarás a cruzar el lago sin morir en el intento?';
+var speed = 70;
+
+function typeWriter() {
+  if (i < txt.length) {
+    document.getElementById("demo").innerHTML += txt.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+
+
+
+
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 var mouseX = 0;
 var mouseY = 0;
+let audio = new Audio();
+audio.loop = true;
+audio.src = './Resourses/jump and run - tropics.ogg';
+let bulletSound = new Audio();
+bulletSound.src='./Resourses/cartoon130.mp3'
+let gameOverSound= new Audio();
+gameOverSound.src='Resourses/gameover-game-over.mp3'
+let priceSound = './Resourses/mario-kart-64.mp3'
+let sadItzama = new Image();
+sadItzama.src='./Resourses/died.png'
 var enemies = [];
 var bolsa = './Resourses/bag.png';
 var vaso = './Resourses/vaso rojo.png' ;
@@ -36,7 +62,7 @@ collision(item) {
 
 
 draw(x,y){
-  if (this.sx > 1390) this.sx = 0;
+  if (this.sx > 1300) this.sx = 0;
    ctx.drawImage(
     this.image,
     this.sx,
@@ -48,7 +74,11 @@ draw(x,y){
     this.width,
     this.height
    )
-   if (frames % 9 === 0) this.sx += 268;
+   if (frames % 6 === 0) this.sx += 268;
+    }
+
+    reset(){
+
     }
   
 };
@@ -147,7 +177,7 @@ draw(health){
   
 };
 
-const healthBar = new statusBar (700,20,250,30,10,'#F9CD06');
+const healthBar = new statusBar (700,20,250,50,10,'#FF4162');
 const Itzama = new character (mouseX, mouseY);
 const Fondo = new Background ();
 
@@ -185,9 +215,11 @@ var canvasPos = getPosition(canvas);
 let frames = 0;
 
 function start(){
+  update()
 interval = setInterval(function() {
   frames ++;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  audio.play();
   Fondo.draw();
   generateEnemies();
   drawingEnemies();
@@ -279,25 +311,43 @@ addEventListener('click',(e)=>{
 
     }
   }
+  bulletSound.play();
 })
 
  gameOver =()=> {
-  ctx.fillText("GameOver morro", 235, 200);
+  audio.pause();
+  gameOverSound.play();
+  ctx.font = "bold 50px Verdana"
+  ctx.fillText("Game Over", 300, 400);
   clearInterval(interval);
-  ctx.clearRect()
+  canvas.removeEventListener("mousemove", setMousePosition, false);
+ 
 }
 
  printScore = () =>{
     score++ 
-    ctx.font = "bold 20px Verdana "
-    ctx.fillText(`Score: ${score}`, 20,30,);
+    ctx.font = "bold 70px Verdana"
+    ctx.fillText(`Score: ${score}`, 30,50,);
+    
  }
 
  winner = () => {
-  ctx.fillText("YOU SAVE ME", 235, 200);
+  ctx.font = "bold 50px Verdana"
+  ctx.fillText("ME SALVASTE", 300, 400);
+  audio.pause();
   clearInterval(interval);
+  canvas.removeEventListener("mousemove", setMousePosition, false);
  }
 
+ reset =()=> {
+  Itzama = 150;
+  audio.currentTime = 0;
+  enemies = [];
+  score = 0;
+  interval = undefined;
+
+}
+
 start()
-update()
+
 

@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Righteous);
 body{
   background-color: #F8DCDB;
 }
@@ -58,6 +59,47 @@ button:active{
 .start button{
   align-self:center;
   margin-bottom: 30px;  
+}
+
+.threeD {
+  color: white;
+  white-space: nowrap;
+  position: absolute;
+  top: 90%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  font-size: 3em;
+  font-family: Righteous;
+  letter-spacing: 0.1em;
+  transition: 0.3s;
+  text-shadow: 1px 1px 0 rgb(241, 115, 113), 1px 2px 0 rgb(241, 115, 113), 1px 3px 0 rgb(241, 115, 113), 1px 4px 0 rgb(241, 115, 113),
+    1px 5px 0 rgb(241, 115, 113), 1px 6px 0 rgb(241, 115, 113), 1px 7px 0 rgb(241, 115, 113), 1px 8px 0 rgb(241, 115, 113),
+    5px 13px 15px rgb(231, 12, 12);
+}
+
+.threeD:hover {
+  transition: 0.3s;
+  transform: scale(1.1)translate(-50%, -50%);
+  text-shadow: 1px -1px 0 rgb(241, 115, 113), 1px -2px 0 rgb(241, 115, 113), 1px -3px 0 rgb(241, 115, 113),
+    1px -4px 0 rgb(241, 115, 113), 1px -5px 0 rgb(241, 115, 113), 1px -6px 0 rgb(241, 115, 113), 1px -7px 0 rgb(241, 115, 113),
+    1px -8px 0 rgb(241, 115, 113), 5px -13px 15px rgb(231, 12, 12), 5px -13px 25px #694343;
+}
+
+
+p{
+  display: flex;
+  margin-left: 40px;
+  width: 50%;
+  color:rgb(241, 115, 113);
+  font-size: 3em;
+  font-family: Righteous;
+  
+}
+img{
+  width: 25%;
+  display: flex;
+  margin-left: auto;
+  margin-right: 100px;
 }
 
 
