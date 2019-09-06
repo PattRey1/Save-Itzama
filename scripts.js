@@ -1,4 +1,4 @@
-
+var video = './Resourses/Save itzama.mp4'
 window.onload = function() {
   iniciar();
 };
@@ -10,6 +10,7 @@ var i = 0;
 var txt = '';
 var speed = 70;
 txt='   HOLA! Me llamo Itzamá y soy un anfibio endémico de México, me encuentro en peligro de extinción en mi país por falta de cuidado en mi entorno natural XOCHIMILCO y de ti depende que llegue sano y salvo a mi casa. ¿Me ayudarás a cruzar el lago sin morir en el intento?'
+
 window.onload = function() {
   typeWriter();
 };
