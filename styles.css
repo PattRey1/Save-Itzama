@@ -85,21 +85,26 @@ button:active{
     1px -8px 0 rgb(241, 115, 113), 5px -13px 15px rgb(231, 12, 12), 5px -13px 25px #694343;
 }
 
+.instrucciones{
+  display: flex;
+
+}
 
 p{
   display: flex;
-  margin-left: 40px;
+  margin-left: 70px;
+  margin-top: 90px;
   width: 50%;
   color:rgb(241, 115, 113);
   font-size: 3em;
-  font-family: Righteous;
-  
+  font-family: Righteous; 
 }
 img{
   width: 25%;
   display: flex;
   margin-left: auto;
-  margin-right: 100px;
+  margin-right: 150px;
+  margin-top: 60px;
 }
 
 

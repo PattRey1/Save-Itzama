@@ -1,6 +1,18 @@
+
+window.onload = function() {
+  iniciar();
+};
+function iniciar() {
+  video=document.getElementById('saveitzama');
+    }
+
 var i = 0;
-var txt = '¡HOLA! Me llamo Itzamá y soy un anfibio endémico de México, me encuentro en peligro de extinción en mi país por falta de cuidado en mi entorno natural XOCHIMILCO y de ti depende que llegue sano y salvo a mi casa. ¿Me ayudarás a cruzar el lago sin morir en el intento?';
+var txt = '';
 var speed = 70;
+txt='   HOLA! Me llamo Itzamá y soy un anfibio endémico de México, me encuentro en peligro de extinción en mi país por falta de cuidado en mi entorno natural XOCHIMILCO y de ti depende que llegue sano y salvo a mi casa. ¿Me ayudarás a cruzar el lago sin morir en el intento?'
+window.onload = function() {
+  typeWriter();
+};
 
 function typeWriter() {
   if (i < txt.length) {
@@ -9,7 +21,6 @@ function typeWriter() {
     setTimeout(typeWriter, speed);
   }
 }
-
 
 
 
@@ -28,6 +39,8 @@ gameOverSound.src='Resourses/gameover-game-over.mp3'
 let priceSound = './Resourses/mario-kart-64.mp3'
 let sadItzama = new Image();
 sadItzama.src='./Resourses/died.png'
+let welcome = new Image();
+welcome.src = './Resourses/welcome.png'
 var enemies = [];
 var bolsa = './Resourses/bag.png';
 var vaso = './Resourses/vaso rojo.png' ;
@@ -315,12 +328,14 @@ addEventListener('click',(e)=>{
 })
 
  gameOver =()=> {
+  canvas.removeEventListener("mousemove", setMousePosition, false);
   audio.pause();
   gameOverSound.play();
-  ctx.font = "bold 50px Verdana"
-  ctx.fillText("Game Over", 300, 400);
   clearInterval(interval);
-  canvas.removeEventListener("mousemove", setMousePosition, false);
+  
+  Fondo.draw();
+  ctx.drawImage (sadItzama , 200,100, 700,500);
+  
  
 }
 
@@ -333,7 +348,7 @@ addEventListener('click',(e)=>{
 
  winner = () => {
   ctx.font = "bold 50px Verdana"
-  ctx.fillText("ME SALVASTE", 300, 400);
+  ctx.drawImage (welcome , 0,0, 1000,800)
   audio.pause();
   clearInterval(interval);
   canvas.removeEventListener("mousemove", setMousePosition, false);
